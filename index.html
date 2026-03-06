@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Sizer">
+  <meta name="theme-color" content="#ffffff">
+  <title>Position Sizer</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="app-header">
+    <h1>Position Sizer</h1>
+  </header>
+
+  <main class="container">
+
+    <!-- ===== SECTION 1: Trade Parameters ===== -->
+    <section class="card trade-params">
+      <h2 class="card-title">Trade Parameters</h2>
+
+      <!-- Long / Short Toggle -->
+      <div class="toggle-group">
+        <button id="btn-long" class="toggle-btn active" data-dir="long">▲ LONG</button>
+        <button id="btn-short" class="toggle-btn" data-dir="short">▼ SHORT</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label for="equity">Account Equity (USD)</label>
+          <input type="number" id="equity" value="10000000" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="risk-pct">Risk Per Trade (%)</label>
+          <input type="number" id="risk-pct" value="0.3" step="0.1" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="entry-price">Entry Price ($)</label>
+          <input type="number" id="entry-price" value="100" step="0.01" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="stop-price">Stop Loss ($)</label>
+          <input type="number" id="stop-price" value="95" step="0.01" inputmode="decimal">
+        </div>
+        <div class="field full-width">
+          <label for="ticker">Ticker (Optional)</label>
+          <input type="text" id="ticker" placeholder="e.g. AAPL">
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 2: Calculated Results ===== -->
+    <section class="card results">
+      <div class="hero-number">
+        <span class="hero-value" id="shares-count">6,000</span>
+        <span class="hero-label">SHARES TO TRADE</span>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric">
+          <span class="metric-value" id="max-risk">$30,000</span>
+          <span class="metric-label">MAX RISK $</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value" id="position-value">$600,000</span>
+          <span class="metric-label">POSITION VALUE</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value" id="risk-per-share">$5.00</span>
+          <span class="metric-label">RISK/SHARE</span>
+        </div>
+        <div class="metric">
+          <span class="metric-value" id="equity-pct">6.0%</span>
+          <span class="metric-label">% EQUITY</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 3: Staggered Stop Levels ===== -->
+    <section class="card staggered-stops">
+      <div class="card-header">
+        <h2 class="card-title">Staggered Stop Levels</h2>
+        <div class="stop-toggle">
+          <button id="btn-2stop" class="stop-btn active">2-STOP</button>
+          <button id="btn-3stop" class="stop-btn">3-STOP</button>
+        </div>
+      </div>
+
+      <div class="stops-table-wrap">
+        <table class="stops-table">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Price</th>
+              <th>Shares</th>
+              <th>% Pos</th>
+              <th>P&L</th>
+            </tr>
+          </thead>
+          <tbody id="stops-body">
+            <!-- filled by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Scale-Out Visualization -->
+      <div class="scale-out-viz">
+        <h3 class="viz-title">Scale-Out Visualization</h3>
+        <div class="viz-bar" id="viz-bar">
+          <!-- markers filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECTION 4: R:R Targets ===== -->
+    <section class="card rr-targets">
+      <h2 class="card-title">R:R Targets</h2>
+      <div class="rr-grid" id="rr-grid">
+        <!-- filled by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => { });
+    }
+  </script>
+</body>
+
+</html>
